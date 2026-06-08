@@ -10,10 +10,11 @@ export default function ContactForm() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
     setStatus('sending');
     setErrorMsg('');
 
-    const fd = new FormData(e.currentTarget);
+    const fd = new FormData(form);
     const payload = {
       name: String(fd.get('name') || '').trim(),
       email: String(fd.get('email') || '').trim(),
@@ -40,7 +41,7 @@ export default function ContactForm() {
       }
 
       setStatus('sent');
-      e.currentTarget.reset();
+      form.reset();
     } catch (err) {
       setStatus('error');
       setErrorMsg(err instanceof Error ? err.message : 'Error desconocido.');
